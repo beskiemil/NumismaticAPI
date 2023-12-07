@@ -9,12 +9,12 @@
     "build": "strapi build",
     "strapi": "strapi"
   },
-  "devDependencies": {},
   "dependencies": {
-    "@strapi/strapi": "4.14.3",
-    "@strapi/plugin-users-permissions": "4.14.3",
     "@strapi/plugin-i18n": "4.14.3",
-    "pg": "8.8.0"
+    "@strapi/plugin-users-permissions": "4.14.3",
+    "@strapi/strapi": "4.14.3",
+    "pg": "^8.8.0",
+    "pg-connection-string": "^2.6.2"
   },
   "author": {
     "name": "A Strapi developer"
