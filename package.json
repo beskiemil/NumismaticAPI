@@ -7,13 +7,16 @@
     "develop": "strapi develop",
     "start": "strapi start",
     "build": "strapi build",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "lint": "eslint --ext .js src",
+    "lint:fix": "eslint --ext .js src--fix"
   },
   "dependencies": {
     "@strapi/plugin-i18n": "4.14.3",
     "@strapi/plugin-users-permissions": "4.14.3",
     "@strapi/provider-upload-cloudinary": "^4.15.5",
     "@strapi/strapi": "4.14.3",
+    "@strapi/utils": "^4.15.5",
     "pg": "^8.8.0",
     "pg-connection-string": "^2.6.2"
   },
@@ -27,5 +30,12 @@
     "node": "18.16.0",
     "npm": "9.5.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.23.5",
+    "@babel/eslint-parser": "^7.23.3",
+    "eslint": "^8.55.0",
+    "eslint-config-prettier": "^9.1.0",
+    "prettier": "3.1.0"
+  }
 }
