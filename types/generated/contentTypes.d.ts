@@ -838,152 +838,47 @@ export interface ApiTypeType extends Schema.CollectionType {
     singularName: 'type';
     pluralName: 'types';
     displayName: 'type';
+    description: '';
   };
   options: {
     draftAndPublish: false;
   };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
   attributes: {
-    title: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    title: Attribute.String & Attribute.Required;
+    numista_id: Attribute.Integer & Attribute.Unique;
     category: Attribute.Enumeration<['coin', 'banknote', 'exonumia']> &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Attribute.Required;
+    series: Attribute.String;
+    commemorated_topic: Attribute.String;
     issuer: Attribute.Relation<
       'api::type.type',
       'oneToOne',
       'api::issuer.issuer'
     >;
-    min_year: Attribute.Integer &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    max_year: Attribute.Integer &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    type: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    value: Attribute.Component<'value.value'> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    shape: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    composition: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    technique: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    weight: Attribute.Float &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    size: Attribute.Float &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    thickness: Attribute.Float &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    mints: Attribute.Relation<'api::type.type', 'manyToMany', 'api::mint.mint'>;
+    min_year: Attribute.Integer;
+    max_year: Attribute.Integer;
+    type: Attribute.String;
+    value: Attribute.Component<'value.value'>;
+    shape: Attribute.String;
+    composition: Attribute.String;
+    technique: Attribute.String;
+    weight: Attribute.Float;
+    size: Attribute.Float;
+    thickness: Attribute.Float;
     orientation: Attribute.Enumeration<
       ['coin', 'medal', 'variable', 'three', 'nine']
-    > &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    obverse: Attribute.Component<'coin-side.coin-side', true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    reverse: Attribute.Component<'coin-side.coin-side', true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    edge: Attribute.Component<'coin-side.coin-side', true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    watermark: Attribute.Component<'coin-side.coin-side', true> &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    mints: Attribute.Relation<'api::type.type', 'manyToMany', 'api::mint.mint'>;
-    series: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    commemorated_topic: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    >;
+    obverse: Attribute.Component<'coin-side.coin-side', true>;
+    reverse: Attribute.Component<'coin-side.coin-side', true>;
+    edge: Attribute.Component<'coin-side.coin-side', true>;
+    watermark: Attribute.Component<'coin-side.coin-side', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
       Attribute.Private;
     updatedBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
       Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::type.type',
-      'oneToMany',
-      'api::type.type'
-    >;
-    locale: Attribute.String;
   };
 }
 
