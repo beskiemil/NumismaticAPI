@@ -4,32 +4,27 @@
   "info": {
     "singularName": "type",
     "pluralName": "types",
-    "displayName": "type"
+    "displayName": "type",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
   },
-  "pluginOptions": {
-    "i18n": {
-      "localized": true
-    }
-  },
+  "pluginOptions": {},
   "attributes": {
     "title": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "string",
       "required": true
     },
+    "numista_id": {
+      "pluginOptions": {},
+      "type": "integer",
+      "required": false,
+      "unique": true
+    },
     "category": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "enumeration",
       "enum": [
         "coin",
@@ -38,100 +33,70 @@
       ],
       "required": true
     },
+    "series": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "commemorated_topic": {
+      "pluginOptions": {},
+      "type": "string"
+    },
     "issuer": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::issuer.issuer"
     },
+    "mints": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::mint.mint",
+      "inversedBy": "types"
+    },
     "min_year": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "integer"
     },
     "max_year": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": false
-        }
-      },
+      "pluginOptions": {},
       "type": "integer"
     },
     "type": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "string"
     },
     "value": {
       "displayName": "value",
       "type": "component",
       "repeatable": false,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "component": "value.value"
     },
     "shape": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "string"
     },
     "composition": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "string"
     },
     "technique": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "string"
     },
     "weight": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "float"
     },
     "size": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "float"
     },
     "thickness": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "float"
     },
     "orientation": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "type": "enumeration",
       "enum": [
         "coin",
@@ -145,64 +110,26 @@
       "displayName": "coin-side",
       "type": "component",
       "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "component": "coin-side.coin-side"
     },
     "reverse": {
       "type": "component",
       "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "component": "coin-side.coin-side"
     },
     "edge": {
       "type": "component",
       "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "component": "coin-side.coin-side"
     },
     "watermark": {
       "type": "component",
       "repeatable": true,
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
+      "pluginOptions": {},
       "component": "coin-side.coin-side"
-    },
-    "mints": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::mint.mint",
-      "inversedBy": "types"
-    },
-    "series": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "string"
-    },
-    "commemorated_topic": {
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      },
-      "type": "string"
     }
   }
 }

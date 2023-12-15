@@ -28,8 +28,8 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     });
 
     //handle pagination
-    const page = parseInt(params?.pagination.page) || 1;
-    const pageSize = parseInt(params?.pagination.pageSize) || 25;
+    const page = parseInt(params?.pagination?.page) || 1;
+    const pageSize = parseInt(params?.pagination?.pageSize) || 25;
     const { results, pagination } = handlePagination(types, page, pageSize);
 
     console.log('results: ', results);
@@ -50,15 +50,15 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
       restParams,
       filters: {
         $or: [
-          { title: { $contains: q } },
-          { series: { $contains: q } },
-          { commemorated_topic: { $contains: q } },
+          { title: { $containsi: q } },
+          { series: { $containsi: q } },
+          { commemorated_topic: { $containsi: q } },
         ],
       },
     });
 
-    const page = parseInt(params?.pagination.page) || 1;
-    const pageSize = parseInt(params?.pagination.pageSize) || 25;
+    const page = parseInt(params?.pagination?.page) || 1;
+    const pageSize = parseInt(params?.pagination?.pageSize) || 25;
     const { results, pagination } = handlePagination(types, page, pageSize);
 
     return { results, pagination };
