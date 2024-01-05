@@ -109,25 +109,25 @@
     "obverse": {
       "displayName": "coin-side",
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "pluginOptions": {},
       "component": "coin-side.coin-side"
     },
     "reverse": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "pluginOptions": {},
       "component": "coin-side.coin-side"
     },
     "edge": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "pluginOptions": {},
       "component": "coin-side.coin-side"
     },
     "watermark": {
       "type": "component",
-      "repeatable": true,
+      "repeatable": false,
       "pluginOptions": {},
       "component": "coin-side.coin-side"
     }

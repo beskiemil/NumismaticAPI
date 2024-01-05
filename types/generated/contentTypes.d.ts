@@ -869,10 +869,10 @@ export interface ApiTypeType extends Schema.CollectionType {
     orientation: Attribute.Enumeration<
       ['coin', 'medal', 'variable', 'three', 'nine']
     >;
-    obverse: Attribute.Component<'coin-side.coin-side', true>;
-    reverse: Attribute.Component<'coin-side.coin-side', true>;
-    edge: Attribute.Component<'coin-side.coin-side', true>;
-    watermark: Attribute.Component<'coin-side.coin-side', true>;
+    obverse: Attribute.Component<'coin-side.coin-side'>;
+    reverse: Attribute.Component<'coin-side.coin-side'>;
+    edge: Attribute.Component<'coin-side.coin-side'>;
+    watermark: Attribute.Component<'coin-side.coin-side'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
