@@ -9,12 +9,9 @@ const { createCoreService } = require('@strapi/strapi').factories;
 module.exports = createCoreService('api::type.type', ({ strapi }) => ({
   async find(ctx) {
     const params = this.getFetchParams(ctx);
-    console.log('params: ', params);
 
     //jeżeli jest q to szukaj po q
     const { q, ...restParams } = params;
-    console.log('q: ', q);
-    console.log('restParams: ', restParams);
     if (q) {
       const { results, pagination } = await strapi
         .service('api::type.type')
@@ -32,22 +29,16 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     const pageSize = parseInt(params?.pagination?.pageSize) || 25;
     const { results, pagination } = handlePagination(types, page, pageSize);
 
-    console.log('results: ', results);
-    console.log('pagination: ', pagination);
     return { results, pagination };
   },
 
   async findByQ(ctx) {
     const params = this.getFetchParams(ctx);
-    console.log('params: ', params);
 
     //jeżeli jest q to szukaj po q
     const { q, ...restParams } = params;
-    console.log('q: ', q);
-    console.log('restParams: ', restParams);
-
     const types = await strapi.entityService.findMany('api::type.type', {
-      restParams,
+      ...restParams,
       filters: {
         $or: [
           { title: { $containsi: q } },

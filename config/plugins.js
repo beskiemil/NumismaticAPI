@@ -1,4 +1,3 @@
-
 module.exports = ({ env }) => ({
   // ...
   upload: {
@@ -13,6 +12,18 @@ module.exports = ({ env }) => ({
         upload: {},
         uploadStream: {},
         delete: {},
+      },
+    },
+  },
+  transformer: {
+    enabled: true,
+    config: {
+      responseTransforms: {
+        removeAttributesKey: true,
+        removeDataKey: true,
+      },
+      requestTransforms: {
+        wrapBodyWithDataKey: true,
       },
     },
   },
