@@ -873,6 +873,7 @@ export interface ApiTypeType extends Schema.CollectionType {
     reverse: Attribute.Component<'coin-side.coin-side'>;
     edge: Attribute.Component<'coin-side.coin-side'>;
     watermark: Attribute.Component<'coin-side.coin-side'>;
+    isNumistaType: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &

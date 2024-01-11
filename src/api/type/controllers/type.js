@@ -16,6 +16,7 @@ module.exports = createCoreController('api::type.type', ({ strapi }) => ({
       .find(sanitizedQueryParams);
 
     //console.log(sanitizedQueryParams);
+
     const sanitizedResults = await this.sanitizeOutput(results, ctx);
     return this.transformResponse(sanitizedResults, { pagination });
   },

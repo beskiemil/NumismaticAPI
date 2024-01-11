@@ -130,6 +130,10 @@
       "repeatable": false,
       "pluginOptions": {},
       "component": "coin-side.coin-side"
+    },
+    "isNumistaType": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

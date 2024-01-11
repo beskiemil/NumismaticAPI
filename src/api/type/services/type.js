@@ -1,5 +1,8 @@
 'use strict';
 
+const { errors } = require('@strapi/utils');
+const { ApplicationError, BadRequestError, UnauthorizedError, TooManyR } =
+  errors;
 /**
  * type service
  */
@@ -7,6 +10,38 @@
 const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::type.type', ({ strapi }) => ({
+  async findOne(id, params) {
+    console.log('params', params);
+    console.log('id', id);
+    const { isNumistaResult } = params;
+
+    if (!isNumistaResult) {
+      delete params.isNumistaResult;
+      return await strapi.entityService.findOne('api::type.type', params);
+    }
+
+    const response = await fetch(`${process.env.NUMISTA_API_URL}/types/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Numista-Api-Key': process.env.NUMISTA_API_KEY,
+      },
+    });
+    if (!response.ok)
+      switch (response.status) {
+        case 400:
+          throw new BadRequestError('Bad request');
+        case 401:
+          throw new UnauthorizedError('Unauthorized');
+        case 404:
+          throw new ApplicationError('Type not found', { id });
+        case 429:
+          throw new ApplicationError('Too many requests');
+        default:
+          throw new ApplicationError('Connection error', { numista_id });
+      }
+    return await response.json();
+  },
   async find(ctx) {
     const params = this.getFetchParams(ctx);
 
@@ -26,36 +61,46 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     const types = await strapi.entityService.findMany('api::type.type', params);
 
     if (showNumistaResults) {
-      const response = await fetch(
-        `${process.env.NUMISTA_API_URL}/types?q=${query}`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Numista-Api-Key': process.env.NUMISTA_API_KEY,
+      try {
+        const response = await fetch(
+          `${process.env.NUMISTA_API_URL}/types?q=${query}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Numista-Api-Key': process.env.NUMISTA_API_KEY,
+            },
           },
-        },
-      ).then((response) => response.json());
-      const { types: numistaTypes } = response;
+        );
+        if (!response.ok)
+          throw new ApplicationError('Connection error', { query });
+        const data = await response.json();
 
-      //transform numista response to match strapi response
-      const transformedNumistaTypes = numistaTypes.map((type) => {
-        return {
-          ...type,
-          id: type.id,
-          numista_id: type.id,
-          isNumistaType: true,
-        };
-      });
-      types.push(...transformedNumistaTypes);
+        if (data.count > 0) {
+          const { types: numistaTypes } = data;
 
-      types.sort((a, b) => {
-        if (a.title < b.title) return -1;
-        else if (a.title > b.title) return 1;
-        else return 0;
-      });
+          //transform numista response to match strapi response
+          const transformedNumistaTypes = numistaTypes.map((type) => {
+            return {
+              ...type,
+              id: type.id,
+              numista_id: type.id,
+              isNumistaType: true,
+            };
+          });
+          types.push(...transformedNumistaTypes);
+
+          types.sort((a, b) => {
+            if (a.title < b.title) return -1;
+            else if (a.title > b.title) return 1;
+            else return 0;
+          });
+        }
+      } catch (err) {
+        console.log(err.details);
+      }
     }
-    console.log(types);
+    //console.log(types);
 
     //handle pagination
     const page = parseInt(params?.pagination?.page) || 1;
