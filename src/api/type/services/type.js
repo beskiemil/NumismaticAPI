@@ -13,11 +13,11 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
   async findOne(id, params) {
     console.log('params', params);
     console.log('id', id);
-    const { isNumistaResult } = params;
+    const { isNumistaType } = params;
 
-    if (!isNumistaResult) {
-      delete params.isNumistaResult;
-      return await strapi.entityService.findOne('api::type.type', params);
+    if (!isNumistaType) {
+      delete params.showNumistaResults;
+      return await strapi.entityService.findOne('api::type.type', id, params);
     }
 
     const response = await fetch(`${process.env.NUMISTA_API_URL}/types/${id}`, {
@@ -40,11 +40,13 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
         default:
           throw new ApplicationError('Connection error', { numista_id });
       }
-    return await response.json();
+    const type = await response.json();
+    type.isNumistaType = true;
+    console.log(type);
+    return type;
   },
   async find(ctx) {
     const params = this.getFetchParams(ctx);
-
     //jeżeli jest q to szukaj po q
     const { query, showNumistaResults } = params;
     if (query) {
@@ -60,7 +62,7 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
 
     const types = await strapi.entityService.findMany('api::type.type', params);
 
-    if (showNumistaResults) {
+    if (showNumistaResults === 'true') {
       try {
         const response = await fetch(
           `${process.env.NUMISTA_API_URL}/types?q=${query}`,
@@ -100,7 +102,6 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
         console.log(err.details);
       }
     }
-    //console.log(types);
 
     //handle pagination
     const page = parseInt(params?.pagination?.page) || 1;

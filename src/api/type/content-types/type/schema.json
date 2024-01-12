@@ -26,11 +26,7 @@
     "category": {
       "pluginOptions": {},
       "type": "enumeration",
-      "enum": [
-        "coin",
-        "banknote",
-        "exonumia"
-      ],
+      "enum": ["coin", "banknote", "exonumia"],
       "required": true
     },
     "series": {
@@ -98,13 +94,7 @@
     "orientation": {
       "pluginOptions": {},
       "type": "enumeration",
-      "enum": [
-        "coin",
-        "medal",
-        "variable",
-        "three",
-        "nine"
-      ]
+      "enum": ["coin", "medal", "variable", "three", "nine"]
     },
     "obverse": {
       "displayName": "coin-side",
