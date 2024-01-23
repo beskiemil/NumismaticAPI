@@ -45,6 +45,7 @@ $RECYCLE.BIN/
 *.jar
 *.rar
 *.tar
+*.tar.gz.enc
 *.zip
 *.com
 *.class
@@ -112,5 +113,3 @@ exports
 dist
 build
 .strapi-updater.json
-
-package-lock.json
