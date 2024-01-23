@@ -80,7 +80,7 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
 
     if (showNumistaResults === 'true') {
       const qsParams = qs.stringify({
-        q: query,
+        ...(query && { q: query }),
         ...(issuer && { issuer: issuer }),
         ...(category !== '' && { category: category }),
       });
