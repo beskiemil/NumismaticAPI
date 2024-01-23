@@ -1,9 +1,9 @@
 'use strict';
 
 /**
- * application router
+ * type router
  */
 
 const { createCoreRouter } = require('@strapi/strapi').factories;
 
-module.exports = createCoreRouter('api::application.application');
+module.exports = createCoreRouter('api::type.type');

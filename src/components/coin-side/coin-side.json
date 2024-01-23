@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_coin_side_coin_sides",
+  "info": {
+    "displayName": "coin-side"
+  },
+  "options": {},
+  "attributes": {
+    "description": {
+      "type": "string"
+    },
+    "lettering": {
+      "type": "string"
+    },
+    "picture": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "picture_copyright": {
+      "type": "string"
+    },
+    "picture_copyright_url": {
+      "type": "string"
+    },
+    "licence_name": {
+      "type": "string"
+    },
+    "licence_url": {
+      "type": "string"
+    }
+  }
+}

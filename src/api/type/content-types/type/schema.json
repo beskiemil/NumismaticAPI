@@ -1,0 +1,135 @@
+{
+  "kind": "collectionType",
+  "collectionName": "types",
+  "info": {
+    "singularName": "type",
+    "pluralName": "types",
+    "displayName": "type",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "pluginOptions": {},
+      "type": "string",
+      "required": true
+    },
+    "numista_id": {
+      "pluginOptions": {},
+      "type": "integer",
+      "required": false,
+      "unique": true
+    },
+    "category": {
+      "pluginOptions": {},
+      "type": "enumeration",
+      "enum": [
+        "coin",
+        "banknote",
+        "exonumia"
+      ],
+      "required": true
+    },
+    "series": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "commemorated_topic": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "issuer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::issuer.issuer"
+    },
+    "mints": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::mint.mint",
+      "inversedBy": "types"
+    },
+    "min_year": {
+      "pluginOptions": {},
+      "type": "integer"
+    },
+    "max_year": {
+      "pluginOptions": {},
+      "type": "integer"
+    },
+    "type": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "value": {
+      "displayName": "value",
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {},
+      "component": "value.value"
+    },
+    "shape": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "composition": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "technique": {
+      "pluginOptions": {},
+      "type": "string"
+    },
+    "weight": {
+      "pluginOptions": {},
+      "type": "float"
+    },
+    "size": {
+      "pluginOptions": {},
+      "type": "float"
+    },
+    "thickness": {
+      "pluginOptions": {},
+      "type": "float"
+    },
+    "orientation": {
+      "pluginOptions": {},
+      "type": "enumeration",
+      "enum": [
+        "coin",
+        "medal",
+        "variable",
+        "three",
+        "nine"
+      ]
+    },
+    "obverse": {
+      "displayName": "coin-side",
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {},
+      "component": "coin-side.coin-side"
+    },
+    "reverse": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {},
+      "component": "coin-side.coin-side"
+    },
+    "edge": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {},
+      "component": "coin-side.coin-side"
+    },
+    "watermark": {
+      "type": "component",
+      "repeatable": false,
+      "pluginOptions": {},
+      "component": "coin-side.coin-side"
+    }
+  }
+}

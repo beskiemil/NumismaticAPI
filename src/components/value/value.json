@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_value_values",
+  "info": {
+    "displayName": "value"
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    },
+    "numeric_value": {
+      "type": "float"
+    },
+    "currency": {
+      "displayName": "currency",
+      "type": "component",
+      "repeatable": false,
+      "component": "value.currency"
+    }
+  }
+}

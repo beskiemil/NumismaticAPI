@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_value_currencies",
+  "info": {
+    "displayName": "currency"
+  },
+  "options": {},
+  "attributes": {
+    "nid": {
+      "type": "integer"
+    },
+    "name": {
+      "type": "string",
+      "required": false
+    },
+    "full_name": {
+      "type": "string"
+    }
+  }
+}

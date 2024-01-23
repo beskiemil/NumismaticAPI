@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_issuer_parents",
+  "info": {
+    "displayName": "parent"
+  },
+  "options": {},
+  "attributes": {
+    "code": {
+      "type": "string",
+      "unique": true
+    },
+    "name": {
+      "type": "string"
+    }
+  }
+}
