@@ -2,6 +2,7 @@
 
 const { errors } = require('@strapi/utils');
 const { ApplicationError, BadRequestError, UnauthorizedError } = errors;
+const qs = require('qs');
 /**
  * type service
  */
@@ -10,8 +11,6 @@ const { createCoreService } = require('@strapi/strapi').factories;
 
 module.exports = createCoreService('api::type.type', ({ strapi }) => ({
   async findOne(id, params) {
-    console.log('params', params);
-    console.log('id', id);
     const { isNumistaType } = params;
 
     if (!isNumistaType) {
@@ -80,9 +79,14 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     const types = await strapi.entityService.findMany('api::type.type', params);
 
     if (showNumistaResults === 'true') {
+      const qsParams = qs.stringify({
+        q: query,
+        ...(issuer && { issuer: issuer }),
+        ...(category !== '' && { category: category }),
+      });
       try {
         const response = await fetch(
-          `${process.env.NUMISTA_API_URL}/types?q=${query}&issuer=${issuer}&category=${category}`,
+          `${process.env.NUMISTA_API_URL}/types?${qsParams}`,
           {
             method: 'GET',
             headers: {
@@ -94,7 +98,6 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
         if (!response.ok)
           throw new ApplicationError('Connection error', { query });
         const data = await response.json();
-
         if (data.count > 0) {
           const { types: numistaTypes } = data;
 
@@ -124,7 +127,6 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     const page = parseInt(params?.pagination?.page) || 1;
     const pageSize = parseInt(params?.pagination?.pageSize) || 25;
     const { results, pagination } = handlePagination(types, page, pageSize);
-    console.log({ results, pagination });
     return { results, pagination };
   },
 }));
