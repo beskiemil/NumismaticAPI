@@ -1,8 +1,7 @@
 'use strict';
 
 const { errors } = require('@strapi/utils');
-const { ApplicationError, BadRequestError, UnauthorizedError, TooManyR } =
-  errors;
+const { ApplicationError, BadRequestError, UnauthorizedError } = errors;
 /**
  * type service
  */
@@ -42,13 +41,12 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
       }
     const type = await response.json();
     type.isNumistaType = true;
-    console.log(type);
     return type;
   },
   async find(ctx) {
     const params = this.getFetchParams(ctx);
     //jeżeli jest q to szukaj po q
-    const { query, showNumistaResults } = params;
+    const { query, issuer, category, showNumistaResults } = params;
     if (query) {
       params.filters = {
         $or: [
@@ -57,7 +55,26 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
           { commemorated_topic: { $containsi: query } },
         ],
       };
+
       delete params.query;
+    }
+
+    if (issuer) {
+      params.filters = {
+        ...params.filters,
+        issuer: { numista_code: { $eq: issuer } },
+      };
+      // params.filters.issuer = { numista_code: { $eq: issuer } };
+      delete params.issuer;
+    }
+
+    if (category) {
+      params.filters = {
+        ...params.filters,
+        category: { $eq: category },
+      };
+      // params.filters.category = { numista_code: { $eq: category } };
+      delete params.category;
     }
 
     const types = await strapi.entityService.findMany('api::type.type', params);
@@ -65,7 +82,7 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     if (showNumistaResults === 'true') {
       try {
         const response = await fetch(
-          `${process.env.NUMISTA_API_URL}/types?q=${query}`,
+          `${process.env.NUMISTA_API_URL}/types?q=${query}&issuer=${issuer}&category=${category}`,
           {
             method: 'GET',
             headers: {
@@ -107,7 +124,7 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
     const page = parseInt(params?.pagination?.page) || 1;
     const pageSize = parseInt(params?.pagination?.pageSize) || 25;
     const { results, pagination } = handlePagination(types, page, pageSize);
-
+    console.log({ results, pagination });
     return { results, pagination };
   },
 }));
