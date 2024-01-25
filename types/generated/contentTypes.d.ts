@@ -362,6 +362,250 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiIssuerIssuer extends Schema.CollectionType {
+  collectionName: 'issuers';
+  info: {
+    singularName: 'issuer';
+    pluralName: 'issuers';
+    displayName: 'issuer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    numista_code: Attribute.String &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    wikidata_id: Attribute.String &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    parent: Attribute.Relation<
+      'api::issuer.issuer',
+      'oneToOne',
+      'api::issuer.issuer'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::issuer.issuer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::issuer.issuer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::issuer.issuer',
+      'oneToMany',
+      'api::issuer.issuer'
+    >;
+    locale: Attribute.String;
+  };
+}
+
+export interface ApiItemItem extends Schema.CollectionType {
+  collectionName: 'items';
+  info: {
+    singularName: 'item';
+    pluralName: 'items';
+    displayName: 'item';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    numista_id: Attribute.Integer;
+    grade: Attribute.Integer &
+      Attribute.Required &
+      Attribute.SetMinMax<{
+        min: 1;
+        max: 7;
+      }>;
+    obverse: Attribute.Media & Attribute.Required;
+    reverse: Attribute.Media & Attribute.Required;
+    toChange: Attribute.Boolean & Attribute.DefaultTo<false>;
+    toSell: Attribute.Boolean & Attribute.DefaultTo<false>;
+    user: Attribute.Relation<
+      'api::item.item',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    type: Attribute.Relation<'api::item.item', 'manyToOne', 'api::type.type'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMintMint extends Schema.CollectionType {
+  collectionName: 'mints';
+  info: {
+    singularName: 'mint';
+    pluralName: 'mints';
+    displayName: 'mint';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    i18n: {
+      localized: true;
+    };
+  };
+  attributes: {
+    place: Attribute.String &
+      Attribute.Required &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    start_year: Attribute.Integer &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    end_year: Attribute.Integer &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: false;
+        };
+      }>;
+    nomisma_id: Attribute.String &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    wikidata_id: Attribute.String &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    local_name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    types: Attribute.Relation<'api::mint.mint', 'manyToMany', 'api::type.type'>;
+    issuer: Attribute.Relation<
+      'api::mint.mint',
+      'oneToOne',
+      'api::issuer.issuer'
+    >;
+    name: Attribute.String &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    numista_id: Attribute.Integer &
+      Attribute.Unique &
+      Attribute.SetPluginOptions<{
+        i18n: {
+          localized: true;
+        };
+      }>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::mint.mint', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::mint.mint', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    localizations: Attribute.Relation<
+      'api::mint.mint',
+      'oneToMany',
+      'api::mint.mint'
+    >;
+    locale: Attribute.String;
+  };
+}
+
+export interface ApiTypeType extends Schema.CollectionType {
+  collectionName: 'types';
+  info: {
+    singularName: 'type';
+    pluralName: 'types';
+    displayName: 'type';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Attribute.String & Attribute.Required;
+    numista_id: Attribute.Integer & Attribute.Unique;
+    category: Attribute.Enumeration<['coin', 'banknote', 'exonumia']> &
+      Attribute.Required;
+    series: Attribute.String;
+    commemorated_topic: Attribute.String;
+    issuer: Attribute.Relation<
+      'api::type.type',
+      'oneToOne',
+      'api::issuer.issuer'
+    >;
+    mints: Attribute.Relation<'api::type.type', 'manyToMany', 'api::mint.mint'>;
+    min_year: Attribute.Integer;
+    max_year: Attribute.Integer;
+    type: Attribute.String;
+    value: Attribute.Component<'value.value'>;
+    shape: Attribute.String;
+    composition: Attribute.String;
+    technique: Attribute.String;
+    weight: Attribute.Float;
+    size: Attribute.Float;
+    thickness: Attribute.Float;
+    orientation: Attribute.Enumeration<
+      ['coin', 'medal', 'variable', 'three', 'nine']
+    >;
+    obverse: Attribute.Component<'coin-side.coin-side'>;
+    reverse: Attribute.Component<'coin-side.coin-side'>;
+    edge: Attribute.Component<'coin-side.coin-side'>;
+    watermark: Attribute.Component<'coin-side.coin-side'>;
+    isNumistaType: Attribute.Boolean & Attribute.DefaultTo<false>;
+    items: Attribute.Relation<'api::type.type', 'oneToMany', 'api::item.item'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -751,6 +995,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    items: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::item.item'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -764,212 +1013,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToOne',
       'admin::user'
     > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiIssuerIssuer extends Schema.CollectionType {
-  collectionName: 'issuers';
-  info: {
-    singularName: 'issuer';
-    pluralName: 'issuers';
-    displayName: 'issuer';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    numista_code: Attribute.String &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    name: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    wikidata_id: Attribute.String &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    parent: Attribute.Relation<
-      'api::issuer.issuer',
-      'oneToOne',
-      'api::issuer.issuer'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::issuer.issuer',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::issuer.issuer',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::issuer.issuer',
-      'oneToMany',
-      'api::issuer.issuer'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiMintMint extends Schema.CollectionType {
-  collectionName: 'mints';
-  info: {
-    singularName: 'mint';
-    pluralName: 'mints';
-    displayName: 'mint';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    i18n: {
-      localized: true;
-    };
-  };
-  attributes: {
-    place: Attribute.String &
-      Attribute.Required &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    start_year: Attribute.Integer &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    end_year: Attribute.Integer &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: false;
-        };
-      }>;
-    nomisma_id: Attribute.String &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    wikidata_id: Attribute.String &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    local_name: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    types: Attribute.Relation<'api::mint.mint', 'manyToMany', 'api::type.type'>;
-    issuer: Attribute.Relation<
-      'api::mint.mint',
-      'oneToOne',
-      'api::issuer.issuer'
-    >;
-    name: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    numista_id: Attribute.Integer &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::mint.mint', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::mint.mint', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    localizations: Attribute.Relation<
-      'api::mint.mint',
-      'oneToMany',
-      'api::mint.mint'
-    >;
-    locale: Attribute.String;
-  };
-}
-
-export interface ApiTypeType extends Schema.CollectionType {
-  collectionName: 'types';
-  info: {
-    singularName: 'type';
-    pluralName: 'types';
-    displayName: 'type';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    title: Attribute.String & Attribute.Required;
-    numista_id: Attribute.Integer & Attribute.Unique;
-    category: Attribute.Enumeration<['coin', 'banknote', 'exonumia']> &
-      Attribute.Required;
-    series: Attribute.String;
-    commemorated_topic: Attribute.String;
-    issuer: Attribute.Relation<
-      'api::type.type',
-      'oneToOne',
-      'api::issuer.issuer'
-    >;
-    mints: Attribute.Relation<'api::type.type', 'manyToMany', 'api::mint.mint'>;
-    min_year: Attribute.Integer;
-    max_year: Attribute.Integer;
-    type: Attribute.String;
-    value: Attribute.Component<'value.value'>;
-    shape: Attribute.String;
-    composition: Attribute.String;
-    technique: Attribute.String;
-    weight: Attribute.Float;
-    size: Attribute.Float;
-    thickness: Attribute.Float;
-    orientation: Attribute.Enumeration<
-      ['coin', 'medal', 'variable', 'three', 'nine']
-    >;
-    obverse: Attribute.Component<'coin-side.coin-side'>;
-    reverse: Attribute.Component<'coin-side.coin-side'>;
-    edge: Attribute.Component<'coin-side.coin-side'>;
-    watermark: Attribute.Component<'coin-side.coin-side'>;
-    isNumistaType: Attribute.Boolean & Attribute.DefaultTo<false>;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<'api::type.type', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -984,6 +1027,10 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::issuer.issuer': ApiIssuerIssuer;
+      'api::item.item': ApiItemItem;
+      'api::mint.mint': ApiMintMint;
+      'api::type.type': ApiTypeType;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -992,9 +1039,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::issuer.issuer': ApiIssuerIssuer;
-      'api::mint.mint': ApiMintMint;
-      'api::type.type': ApiTypeType;
     }
   }
 }

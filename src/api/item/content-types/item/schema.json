@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "items",
+  "info": {
+    "singularName": "item",
+    "pluralName": "items",
+    "displayName": "item"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "numista_id": {
+      "type": "integer",
+      "required": false,
+      "unique": false
+    },
+    "grade": {
+      "type": "integer",
+      "required": true,
+      "max": 7,
+      "min": 1
+    },
+    "obverse": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "reverse": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "required": true
+    },
+    "toChange": {
+      "type": "boolean",
+      "default": false
+    },
+    "toSell": {
+      "type": "boolean",
+      "default": false
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "items"
+    },
+    "type": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::type.type",
+      "inversedBy": "items"
+    }
+  }
+}

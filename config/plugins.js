@@ -35,7 +35,7 @@ module.exports = ({ env }) => ({
         removeDataKey: true,
       },
       requestTransforms: {
-        wrapBodyWithDataKey: true,
+        wrapBodyWithDataKey: false,
       },
     },
   },
