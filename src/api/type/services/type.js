@@ -36,7 +36,7 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
         case 429:
           throw new ApplicationError('Too many requests');
         default:
-          throw new ApplicationError('Connection error', { numista_id });
+          throw new ApplicationError('Connection error', { id });
       }
     const type = await response.json();
     type.isNumistaType = true;
@@ -122,6 +122,8 @@ module.exports = createCoreService('api::type.type', ({ strapi }) => ({
         console.log(err.details);
       }
     }
+
+    console.log(types.length);
 
     //handle pagination
     const page = parseInt(params?.pagination?.page) || 1;

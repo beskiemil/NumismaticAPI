@@ -722,7 +722,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -756,6 +755,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::item.item'
     >;
+    avatar: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -844,6 +844,7 @@ export interface ApiItemItem extends Schema.CollectionType {
     singularName: 'item';
     pluralName: 'items';
     displayName: 'item';
+    description: '';
   };
   options: {
     draftAndPublish: false;
@@ -858,14 +859,13 @@ export interface ApiItemItem extends Schema.CollectionType {
       }>;
     obverse: Attribute.Media & Attribute.Required;
     reverse: Attribute.Media & Attribute.Required;
-    toChange: Attribute.Boolean & Attribute.DefaultTo<false>;
-    toSell: Attribute.Boolean & Attribute.DefaultTo<false>;
     user: Attribute.Relation<
       'api::item.item',
       'manyToOne',
       'plugin::users-permissions.user'
     >;
     type: Attribute.Relation<'api::item.item', 'manyToOne', 'api::type.type'>;
+    offer: Attribute.Relation<'api::item.item', 'oneToOne', 'api::offer.offer'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<'api::item.item', 'oneToOne', 'admin::user'> &
@@ -965,6 +965,43 @@ export interface ApiMintMint extends Schema.CollectionType {
   };
 }
 
+export interface ApiOfferOffer extends Schema.CollectionType {
+  collectionName: 'offers';
+  info: {
+    singularName: 'offer';
+    pluralName: 'offers';
+    displayName: 'offer';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    item: Attribute.Relation<'api::offer.offer', 'oneToOne', 'api::item.item'>;
+    trader: Attribute.String;
+    trader_type: Attribute.Enumeration<['user', 'store', 'trader', 'other']>;
+    trader_description: Attribute.Text;
+    price: Attribute.Decimal;
+    finished: Attribute.Boolean & Attribute.DefaultTo<false>;
+    description: Attribute.Text;
+    trader_location: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::offer.offer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::offer.offer',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiTypeType extends Schema.CollectionType {
   collectionName: 'types';
   info: {
@@ -1038,6 +1075,7 @@ declare module '@strapi/types' {
       'api::issuer.issuer': ApiIssuerIssuer;
       'api::item.item': ApiItemItem;
       'api::mint.mint': ApiMintMint;
+      'api::offer.offer': ApiOfferOffer;
       'api::type.type': ApiTypeType;
     }
   }

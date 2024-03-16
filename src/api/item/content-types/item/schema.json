@@ -4,7 +4,8 @@
   "info": {
     "singularName": "item",
     "pluralName": "items",
-    "displayName": "item"
+    "displayName": "item",
+    "description": ""
   },
   "options": {
     "draftAndPublish": false
@@ -23,28 +24,20 @@
       "min": 1
     },
     "obverse": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "reverse": {
-      "allowedTypes": [
-        "images"
-      ],
       "type": "media",
       "multiple": false,
-      "required": true
-    },
-    "toChange": {
-      "type": "boolean",
-      "default": false
-    },
-    "toSell": {
-      "type": "boolean",
-      "default": false
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
     },
     "user": {
       "type": "relation",
@@ -57,6 +50,12 @@
       "relation": "manyToOne",
       "target": "api::type.type",
       "inversedBy": "items"
+    },
+    "offer": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::offer.offer",
+      "mappedBy": "item"
     }
   }
 }
