@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "offers",
+  "info": {
+    "singularName": "offer",
+    "pluralName": "offers",
+    "displayName": "offer",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "item": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::item.item",
+      "inversedBy": "offer"
+    },
+    "trader": {
+      "type": "string"
+    },
+    "trader_type": {
+      "type": "enumeration",
+      "enum": [
+        "user",
+        "store",
+        "trader",
+        "other"
+      ],
+      "required": false
+    },
+    "trader_description": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal",
+      "required": false
+    },
+    "finished": {
+      "type": "boolean",
+      "default": false
+    },
+    "description": {
+      "type": "text"
+    },
+    "trader_location": {
+      "type": "string"
+    }
+  }
+}
