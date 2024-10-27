@@ -63,8 +63,8 @@ module.exports = createCoreService('api::item.item', ({ strapi }) => ({
     const { results, pagination } = handlePagination(items, page, pageSize);
     return { results, pagination };
   },
+
   async findOne(id, params) {
-    console.log(id, params);
     const item = await strapi.entityService.findOne(
       'api::item.item',
       id,
